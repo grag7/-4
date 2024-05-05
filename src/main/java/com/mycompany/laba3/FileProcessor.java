@@ -5,7 +5,6 @@ import java.util.List;
 
 
 public interface FileProcessor {
-    boolean canProcess(String fileType);
 
     List<Reactor> process(File file) throws Exception;
     

@@ -9,6 +9,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 @JacksonXmlRootElement(localName = "root")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Reactor {
+    
     private String name;
     private double burnup;
     private String classe;
@@ -25,6 +26,7 @@ public class Reactor {
     @JsonCreator
     public Reactor( @JsonProperty("class")
                     @JacksonXmlProperty(localName = "class")
+                   
                     String classe,
                     @JacksonXmlProperty(localName = "burnup")
                     @JsonProperty("burnup")
@@ -62,73 +64,45 @@ public class Reactor {
         this.fileType = fileType;
     }
     
-     public double getBurnup() {
-        return burnup;
-    }
-
-    public void setBurnup(double burnup) {
-        this.burnup = burnup;
-    }
-
-    // Getter and Setter for classe
-    public String getClasse() {
+    public String getClasse(){
         return classe;
     }
-
-    public void setClasse(String classe) {
-        this.classe = classe;
-    }
-
-    // Getter and Setter for electricalCapacity
-    public double getElectricalCapacity() {
-        return electricalCapacity;
-    }
-
-    public void setElectricalCapacity(double electricalCapacity) {
-        this.electricalCapacity = electricalCapacity;
-    }
-
-    // Getter and Setter for firstLoad
-    public double getFirstLoad() {
-        return firstLoad;
-    }
-
-    public void setFirstLoad(double firstLoad) {
-        this.firstLoad = firstLoad;
-    }
-
-    // Getter and Setter for kpd
-    public double getKpd() {
-        return kpd;
-    }
-
-    public void setKpd(double kpd) {
-        this.kpd = kpd;
-    }
-
-    // Getter and Setter for lifeTime
-    public double getLifeTime() {
-        return lifeTime;
-    }
     
-    public double getEnrichment() {
-        return enrichment;
+    public String getBurnup() {
+        if (burnup == 0.0) return "Отсутствует информация.";
+        return String.valueOf(burnup);
     }
 
-    public void setLifeTime(double lifeTime) {
-        this.lifeTime = lifeTime;
+    public String getElectricalCapacity() {
+        if (electricalCapacity == 0.0) return "Отсутствует информация.";
+        return String.valueOf(electricalCapacity);
     }
 
-    // Getter and Setter for terminalCapacity
-    public double getTermalCapacity() {
-        return termalCapacity;
+    public String getFirstLoad() {
+        if (firstLoad == 0.0) return "Отсутствует информация.";
+        return String.valueOf(firstLoad);
     }
 
-    public void setTermalCapacity(double termalCapacity) {
-        this.termalCapacity = termalCapacity;
+    public String getKpd() {
+        if (kpd == 0.0) return "Отсутствует информация.";
+        return String.valueOf(kpd);
     }
 
-    // Getter and Setter for fileType
+    public String getLifeTime() {
+        if (lifeTime == 0.0) return "Отсутствует информация.";
+        return String.valueOf(lifeTime);
+    }
+
+    public String getEnrichment() {
+        if (enrichment == 0.0) return "Отсутствует информация.";
+        return String.valueOf(enrichment);
+    }
+
+    public String getTermalCapacity() {
+        if (termalCapacity == 0.0) return "Отсутствует информация.";
+        return String.valueOf(termalCapacity);
+    }
+
     public String getFileType() {
         return fileType;
     }

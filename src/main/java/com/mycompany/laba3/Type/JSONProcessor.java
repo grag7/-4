@@ -12,10 +12,6 @@ import java.util.Map;
 
 public class JSONProcessor implements FileProcessor {
     FileProcessor next;
-    @Override
-    public boolean canProcess(String fileType) {
-        return fileType.equalsIgnoreCase("json");
-    }
 
     @Override
     public List<Reactor> process(File file) throws Exception {
@@ -34,15 +30,12 @@ public class JSONProcessor implements FileProcessor {
             
         }
         else{
-            next.process(file);
+            reactors = next.process(file);
         }
 
         return reactors;
     }
     
-    public void setNext(){
-        
-    }
 
     @Override
     public void setNext(FileProcessor fileProcessor) {

@@ -16,6 +16,7 @@ public class Manager {
     
     public void processingFile(File file) throws Exception{
         List<Reactor> reactorList = yamlProcessor.process(file);
+        
         storage.addToStorage(reactorList);
         
     }

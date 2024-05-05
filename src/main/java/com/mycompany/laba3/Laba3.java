@@ -4,6 +4,7 @@ package com.mycompany.laba3;
 public class Laba3 {
 
     public static void main(String[] args) {
+        
         Manager manager = new Manager();
         GUI gui = new GUI(manager);
         gui.setTitle("Лабораторная работа №3");

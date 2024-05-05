@@ -1,19 +1,33 @@
 package com.mycompany.laba3;
 
 import java.io.File;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 public class GUI extends javax.swing.JFrame {
     private Manager manager;
     
     public GUI(Manager manager) {
-        this.manager = manager;
-        initComponents();
-        treeConfiguration();
+        try {
+            this.manager = manager;
+            initComponents();
+            treeConfiguration();
+
+            File currentDirectory = new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParentFile();
+            fileChooser.setCurrentDirectory(currentDirectory);
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("JSON, YAML, XML", "json", "yaml", "xml");
+            fileChooser.setFileFilter(filter);
+            fileChooser.setAcceptAllFileFilterUsed(false);
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     @SuppressWarnings("unchecked")
@@ -21,38 +35,38 @@ public class GUI extends javax.swing.JFrame {
     private void initComponents() {
 
         fileChooser = new javax.swing.JFileChooser();
-        jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTree1 = new javax.swing.JTree();
-        loadBtn = new javax.swing.JButton();
+        panel = new javax.swing.JPanel();
+        treeProcesses = new javax.swing.JScrollPane();
+        reactorsTree = new javax.swing.JTree();
+        download = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jScrollPane1.setViewportView(jTree1);
+        treeProcesses.setViewportView(reactorsTree);
 
-        loadBtn.setText("Загрузить файл");
-        loadBtn.addActionListener(new java.awt.event.ActionListener() {
+        download.setText("Загрузить файл");
+        download.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loadBtnActionPerformed(evt);
+                downloadActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
+        panel.setLayout(panelLayout);
+        panelLayout.setHorizontalGroup(
+            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addComponent(loadBtn)
+                .addComponent(download)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(treeProcesses, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        panelLayout.setVerticalGroup(
+            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(treeProcesses, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addGroup(panelLayout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(loadBtn)
+                .addComponent(download)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -60,17 +74,17 @@ public class GUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void loadBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadBtnActionPerformed
+    private void downloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_downloadActionPerformed
         int returnValue = fileChooser.showOpenDialog(null);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             try {
@@ -78,15 +92,15 @@ public class GUI extends javax.swing.JFrame {
                 manager.processingFile(file);
                 treeConfiguration();
             } catch (Exception ex) {
-                Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(rootPane, "Ошибка чтения", "Ошибка", JOptionPane.ERROR_MESSAGE);
             }
             
         }    
-    }//GEN-LAST:event_loadBtnActionPerformed
+    }//GEN-LAST:event_downloadActionPerformed
     private void treeConfiguration() {
         DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode("Реакторы");
         
-        List<Reactor> listReactors = manager.getStorage().getReactorStorage();
+           List<Reactor> listReactors = manager.getStorage().getReactorStorage();
         for(Reactor reactor: listReactors) {
             DefaultMutableTreeNode reactorNode = new DefaultMutableTreeNode(
                     reactor.getName());
@@ -103,20 +117,16 @@ public class GUI extends javax.swing.JFrame {
             rootNode.add(reactorNode);
         }
         
-        jTree1.setModel(new javax.swing.tree.DefaultTreeModel(rootNode));
-        
-        
-        
-        
+        reactorsTree.setModel(new javax.swing.tree.DefaultTreeModel(rootNode));    
     }
 
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton download;
     private javax.swing.JFileChooser fileChooser;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTree jTree1;
-    private javax.swing.JButton loadBtn;
+    private javax.swing.JPanel panel;
+    private javax.swing.JTree reactorsTree;
+    private javax.swing.JScrollPane treeProcesses;
     // End of variables declaration//GEN-END:variables
 }

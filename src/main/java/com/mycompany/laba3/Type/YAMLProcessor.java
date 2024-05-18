@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.mycompany.laba3.Reactor;
-import com.mycompany.laba3.FileProcessor;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +11,7 @@ import java.util.Map;
 
 
 
-public class YAMLProcessor implements FileProcessor {
-
-    private FileProcessor next;
+public class YAMLProcessor extends BaseProcessor {
     
     @Override
     public List<Reactor> process(File file) throws Exception {
@@ -37,8 +34,5 @@ public class YAMLProcessor implements FileProcessor {
 
         return reactors;
     }
-    @Override
-    public void setNext(FileProcessor fileProcessor) {
-        this.next = fileProcessor;
-    }
+
 }

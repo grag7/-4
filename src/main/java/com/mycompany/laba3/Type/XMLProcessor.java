@@ -3,7 +3,6 @@ package com.mycompany.laba3.Type;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import com.mycompany.laba3.FileProcessor;
 import com.mycompany.laba3.Reactor;
 import java.io.File;
 import java.util.ArrayList;
@@ -12,8 +11,8 @@ import java.util.Map;
 
 
 
-public class XMLProcessor implements FileProcessor {
-    private FileProcessor next;
+public class XMLProcessor extends BaseProcessor {
+    
     
     
     @Override
@@ -39,8 +38,5 @@ public class XMLProcessor implements FileProcessor {
         return reactors;
     }
     
-    @Override
-    public void setNext(FileProcessor fileProcessor) {
-        this.next = fileProcessor;
-    }
+    
 }

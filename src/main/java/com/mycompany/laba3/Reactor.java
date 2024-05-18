@@ -26,7 +26,6 @@ public class Reactor {
     @JsonCreator
     public Reactor( @JsonProperty("class")
                     @JacksonXmlProperty(localName = "class")
-                   
                     String classe,
                     @JacksonXmlProperty(localName = "burnup")
                     @JsonProperty("burnup")

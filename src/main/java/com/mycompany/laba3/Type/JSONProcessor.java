@@ -2,7 +2,6 @@ package com.mycompany.laba3.Type;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mycompany.laba3.FileProcessor;
 import com.mycompany.laba3.Reactor;
 import java.io.File;
 import java.util.ArrayList;
@@ -10,8 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class JSONProcessor implements FileProcessor {
-    FileProcessor next;
+public class JSONProcessor extends BaseProcessor {
 
     @Override
     public List<Reactor> process(File file) throws Exception {
@@ -36,9 +34,4 @@ public class JSONProcessor implements FileProcessor {
         return reactors;
     }
     
-
-    @Override
-    public void setNext(FileProcessor fileProcessor) {
-        this.next = fileProcessor;
-    }
     }

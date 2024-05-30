@@ -7,7 +7,7 @@ public class Laba3 {
         
         Manager manager = new Manager();
         GUI gui = new GUI(manager);
-        gui.setTitle("Лабораторная работа №3");
+        gui.setTitle("Лабораторная работа №4");
         gui.setLocationRelativeTo(null);
         gui.setVisible(true);
     }
